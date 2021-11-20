@@ -1,15 +1,37 @@
 {{page-title "BodyAwareness"}}
 <div class="uk-card uk-card-body uk-background-default">
   <h2 class="uk-card-title">Body awareness scale</h2>
-  <p>Please choose for each question pair the number that you find describes best how you're currently feeling.
+  <p>Please choose for each question pair the number that you find describes best how you're currently feeling.</p>
+  <p class="uk-text-meta">
     Choose a negative value if you feel closer to first statement of the pair, choose a positive value if the second statement describes better how you feel.
   </p>
+  <hr />
 
-  <Forms::Pairs
-    @pairs={{this.questionPairs}}
-    @onSubmit={{this.submitForm}}
-    @isSubmitted={{this.parsedData}}
-  />
+  {{#if this.hasUsedScaleBefore}}
+    <Forms::Uploader
+      @onUpload={{this.setExistingData}}
+      class="uk-margin-bottom" />
+  {{else}}
+    <div class="uk-flex uk-flex-between uk-margin-bottom uk-flex-middle">
+      <p>Did you use the scale before?</p>
+      <div class="uk-flex uk-flex-right">
+      <UkButton @color="secondary" @fill={{false}} @on-click={{fn this.confirmPreviousUse true}} class="uk-margin-right">
+        Yes
+      </UkButton>
+      <UkButton @fill={{false}} @on-click={{fn this.confirmPreviousUse false}}>
+        No
+      </UkButton>
+      </div>
+    </div>
+  {{/if}}
+
+  {{#if this.isShowingForm}}
+    <Forms::Pairs
+      @pairs={{this.questionPairs}}
+      @onSubmit={{this.submitForm}}
+      @isSubmitted={{this.parsedData}}
+    />
+  {{/if}}
 
   <section class="uk-flex uk-flex-center">
   {{#if this.parsedData}}

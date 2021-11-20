@@ -1,0 +1,7 @@
+<section ...attributes>
+  {{#if this.file}}
+    <span class="uk-text-bold">{{this.file.name}}</span> has been uploaded to your browser's storage.
+  {{else}}
+  <p>Update your entries by uploading your .csv: <input type="file" id="input" accept="text/csv" onchange={{this.uploadFile}}></p>
+  {{/if}}
+</section>

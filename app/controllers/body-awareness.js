@@ -1,7 +1,7 @@
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import * as Papa from 'papaparse';
+import FileReader from 'ember-file-upload/system/file-reader';
 
 export default class BodyAwarenessController extends Controller {
   fileName = 'body-awareness.csv';
@@ -17,7 +17,7 @@ export default class BodyAwarenessController extends Controller {
     },
     {
       name: 'hopefulness',
-      negative: "Hopeless",
+      negative: 'Hopeless',
       positive: "I'm full of hope",
       rangeMin: '-5',
       rangeMax: '5',
@@ -34,34 +34,94 @@ export default class BodyAwarenessController extends Controller {
   @tracked
   downloadUrl = null;
 
+  @tracked
+  existingData = null;
+
+  @tracked
+  hasUsedScaleBefore = null;
+
+  @tracked
+  hasConfirmedUse = false;
+
   parseToCSV(rawData) {
-    let data = [];
+    let data = this.existingData || '';
 
-    this.addNewEntry(data, rawData);
+    let headerData = this.getHeaders(data, rawData)
+    let entryData = this.getNewEntry(headerData, rawData);
 
-    let result = Papa.unparse(data, {
-      skipEmptyLines: false,
-    });
-
-    return result;
+    return entryData;
   }
 
-  addNewEntry(existingData, rawData) {
-    let newEntry = {};
+  getHeaders(existingData, rawData) {
+    if (!existingData) {
+      let filteredData = rawData.map(category => {
+        let entry = {};
+        entry.name = category.name;
+        entry.value = category.value;
+        return entry;
+      });
 
-    rawData.forEach(entry => {
-      let key = entry.name;
-      newEntry[key] = entry.value;
+      filteredData.push({ name: 'created_at', value: new Date().toISOString() });
+      let names = filteredData.mapBy('name').join(',');
+      existingData += names + `\n`;
+    }
+    return existingData;
+  }
+
+  getNewEntry(existingData, rawData) {
+    let filteredData = rawData.map(category => {
+      let entry = {};
+      entry.name = category.name;
+      entry.value = category.value;
+      return entry;
     });
 
-    newEntry['created_at'] = new Date();
-    existingData.push(newEntry);
+    filteredData.push({ name: 'created_at', value: new Date().toISOString() });
+
+    this.checkIfSourceFileCorrect(existingData, filteredData);
+
+    let values = filteredData.mapBy('value').join(',');
+
+    if (!existingData.endsWith(`\n`)) {
+      existingData += '\n';
+    }
+    existingData += values + `\n`;
+    return existingData;
+  }
+
+  checkIfSourceFileCorrect(existingData, newData) {
+    let parsedExistingData = existingData.split(',');
+    console.log({ parsedExistingData });
+    let oldHeaders = parsedExistingData;
+    let newHeaders = Object.keys(newData);
+    console.log({ oldHeaders, newHeaders, isOk: newHeaders === oldHeaders });
   }
 
   prepareDownload(csv, filename) {
-    let csvFile = new Blob([csv], {type: "text/csv"});
+    let csvFile = new Blob([csv], { type: 'text/csv' });
     this.download = filename;
     this.downloadUrl = window.URL.createObjectURL(csvFile);
+  }
+
+  get isShowingForm() {
+    return this.hasConfirmedUse && !this.hasUsedScaleBefore ||
+    this.hasConfirmedUse && this.existingData;
+  }
+
+  @action
+  confirmPreviousUse(value) {
+    this.hasUsedScaleBefore = value;
+    this.hasConfirmedUse = true;
+  }
+
+  @action
+  async setExistingData(data) {
+    let objectURL = window.URL.createObjectURL(data.file);
+    let reader = new FileReader();
+    let parsedData = await reader.readAsText(data.file);
+
+    this.existingData = parsedData;
+    console.log({ existingData: this.existingData });
   }
 
   @action
