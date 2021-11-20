@@ -1,5 +1,5 @@
 import EmberRouter from '@ember/routing/router';
-import config from 'tracking/config/environment';
+import config from 'serenitate-one/config/environment';
 
 export default class Router extends EmberRouter {
   location = config.locationType;

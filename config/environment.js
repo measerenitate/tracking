@@ -2,7 +2,7 @@
 
 module.exports = function (environment) {
   let ENV = {
-    modulePrefix: 'tracking',
+    modulePrefix: 'serenitate-one',
     environment,
     rootURL: '/',
     locationType: 'auto',

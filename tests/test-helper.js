@@ -1,5 +1,5 @@
-import Application from 'tracking/app';
-import config from 'tracking/config/environment';
+import Application from 'serenitate-one/app';
+import config from 'serenitate-one/config/environment';
 import * as QUnit from 'qunit';
 import { setApplication } from '@ember/test-helpers';
 import { setup } from 'qunit-dom';
