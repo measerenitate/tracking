@@ -11,7 +11,8 @@
     <Forms::Uploader
       @onUpload={{this.setExistingData}}
       class="uk-margin-bottom" />
-  {{else}}
+  {{/if}}
+  {{#unless this.hasConfirmedUse}}
     <div class="uk-flex uk-flex-between uk-margin-bottom uk-flex-middle">
       <p>Did you use the scale before?</p>
       <div class="uk-flex uk-flex-right">
@@ -23,7 +24,7 @@
       </UkButton>
       </div>
     </div>
-  {{/if}}
+  {{/unless}}
 
   {{#if this.isShowingForm}}
     <Forms::Pairs

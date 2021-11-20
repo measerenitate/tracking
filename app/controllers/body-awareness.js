@@ -2,28 +2,12 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import FileReader from 'ember-file-upload/system/file-reader';
+import questions from 'serenitate-one/data/body-awareness';
 
 export default class BodyAwarenessController extends Controller {
   fileName = 'body-awareness.csv';
 
-  questionPairs = [
-    {
-      name: 'body-likeness',
-      negative: 'I dislike my body',
-      positive: 'I like my body',
-      rangeMin: '-5',
-      rangeMax: '5',
-      value: 0,
-    },
-    {
-      name: 'hopefulness',
-      negative: 'Hopeless',
-      positive: "I'm full of hope",
-      rangeMin: '-5',
-      rangeMax: '5',
-      value: 0,
-    },
-  ];
+  questionPairs = questions;
 
   @tracked
   parsedData = null;
@@ -91,10 +75,8 @@ export default class BodyAwarenessController extends Controller {
 
   checkIfSourceFileCorrect(existingData, newData) {
     let parsedExistingData = existingData.split(',');
-    console.log({ parsedExistingData });
     let oldHeaders = parsedExistingData;
     let newHeaders = Object.keys(newData);
-    console.log({ oldHeaders, newHeaders, isOk: newHeaders === oldHeaders });
   }
 
   prepareDownload(csv, filename) {
@@ -121,7 +103,6 @@ export default class BodyAwarenessController extends Controller {
     let parsedData = await reader.readAsText(data.file);
 
     this.existingData = parsedData;
-    console.log({ existingData: this.existingData });
   }
 
   @action

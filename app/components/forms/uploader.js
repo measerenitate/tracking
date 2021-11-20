@@ -11,6 +11,5 @@ export default class FormsUploaderComponent extends Component {
     let file = ev.target.files[0];
     this.args.onUpload({ file });
     this.file = file;
-    console.log({ file });
   }
 }
