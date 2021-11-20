@@ -1,5 +1,10 @@
-{{page-title "serenitate-one Anything!"}}
+{{page-title "Serenitate | Increase your awareness"}}
 
-Welcome to the serenitate-one page
+<UkSubnav @divider={{true}} class="uk-margin-remove-top uk-padding" as |nav|>
+  {{#nav.link-item "index"}}Home{{/nav.link-item}}
+  {{#nav.link-item "body-awareness"}}Body awareness{{/nav.link-item}}
+</UkSubnav>
 
-{{outlet}}
+<main class="uk-container">
+  {{outlet}}
+</main>

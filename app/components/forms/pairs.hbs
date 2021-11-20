@@ -1,0 +1,10 @@
+<form>
+  {{#each @pairs as |pair|}}
+    <Forms::Slider @entry={{pair}} @onUpdate={{this.updateForm}} />
+  {{/each}}
+  <div class="uk-flex uk-flex-right">
+    <UkButton @color="primary" @fill={{true}} @on-click={{fn @onSubmit this.pairs}} disabled={{@isSubmitted}}>
+      Save
+    </UkButton>
+  </div>
+</form>

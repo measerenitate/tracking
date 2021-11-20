@@ -1,0 +1,11 @@
+<fieldset>
+  <label class="uk-invisible" for="forms-pairs-range-{{@entry.name}}">{{this.label}}</label>
+  <div class="uk-flex uk-flex-between">
+    <span>{{@entry.negative}}</span>
+    <input id="forms-pairs-range-{{@entry.name}}" class="uk-range uk-width-1-2" type="range" min={{@entry.rangeMin}} max={{@entry.rangeMax}} oninput={{fn this.updateRange @entry.name}} ...attributes />
+    <span>{{@entry.positive}}</span>
+  </div>
+  <div class="uk-flex uk-flex-center uk-text-center">
+    <p class="uk-width-auto uk-text-primary uk-margin-small-top uk-margin-remove-bottom">{{this.currentValue}}</p>
+  </div>
+</fieldset>

@@ -1,0 +1,19 @@
+{{page-title "BodyAwareness"}}
+<div class="uk-card uk-card-body uk-background-default">
+  <h2 class="uk-card-title">Body awareness scale</h2>
+  <p>Please choose for each question pair the number that you find describes best how you're currently feeling.
+    Choose a negative value if you feel closer to first statement of the pair, choose a positive value if the second statement describes better how you feel.
+  </p>
+
+  <Forms::Pairs
+    @pairs={{this.questionPairs}}
+    @onSubmit={{this.submitForm}}
+    @isSubmitted={{this.parsedData}}
+  />
+
+  <section class="uk-flex uk-flex-center">
+  {{#if this.parsedData}}
+    <a href={{this.downloadUrl}} download={{this.download}} class="uk-button uk-button-primary uk-button-large">Download my entry as .csv</a>
+  {{/if}}
+  </section>
+</div>
