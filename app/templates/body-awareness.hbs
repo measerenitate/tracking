@@ -1,25 +1,29 @@
-{{page-title "BodyAwareness"}}
+{{page-title "Body Awareness"}}
+
 <div class="uk-card uk-card-body uk-background-default">
-  <h2 class="uk-card-title">Body awareness scale</h2>
-  <p>Please choose for each question pair the number that you find describes best how you're currently feeling.</p>
-  <p class="uk-text-meta">
-    Choose a negative value if you feel closer to first statement of the pair, choose a positive value if the second statement describes better how you feel.
-  </p>
+  <h2 class="uk-card-title" data-test-page-header>Body awareness scale</h2>
+  <div data-test-page-description>
+    <p>Please choose for each question pair the number that you find describes best how you're currently feeling.</p>
+    <p class="uk-text-meta">
+      Choose a negative value if you feel closer to first statement of the pair, choose a positive value if the second statement describes better how you feel.
+    </p>
+  </div>
   <hr />
 
   {{#if this.hasUsedScaleBefore}}
     <Forms::Uploader
       @onUpload={{this.setExistingData}}
-      class="uk-margin-bottom" />
+      class="uk-margin-bottom"
+      data-test-page-uploader="body-awareness" />
   {{/if}}
   {{#unless this.hasConfirmedUse}}
-    <div class="uk-flex uk-flex-between uk-margin-bottom uk-flex-middle">
+    <div class="uk-flex uk-flex-between uk-margin-bottom uk-flex-middle" data-test-page-preliminary-information>
       <p>Did you use the scale before?</p>
       <div class="uk-flex uk-flex-right">
-      <UkButton @color="secondary" @fill={{false}} @on-click={{fn this.confirmPreviousUse true}} class="uk-margin-right">
+      <UkButton @color="secondary" @fill={{false}} @on-click={{fn this.confirmPreviousUse true}} class="uk-margin-right" data-test-page-preliminary-information="yes">
         Yes
       </UkButton>
-      <UkButton @fill={{false}} @on-click={{fn this.confirmPreviousUse false}}>
+      <UkButton @fill={{false}} @on-click={{fn this.confirmPreviousUse false}} data-test-page-preliminary-information="no">
         No
       </UkButton>
       </div>
@@ -31,12 +35,14 @@
       @pairs={{this.questionPairs}}
       @onSubmit={{this.submitForm}}
       @isSubmitted={{this.parsedData}}
+      data-test-page-form="body-awareness"
     />
   {{/if}}
 
-  <section class="uk-flex uk-flex-center">
+
   {{#if this.parsedData}}
-    <a href={{this.downloadUrl}} download={{this.download}} class="uk-button uk-button-primary uk-button-large">Download my entry as .csv</a>
+    <section class="uk-flex uk-flex-center">
+      <a href={{this.downloadUrl}} download={{this.download}} class="uk-button uk-button-primary uk-button-large" data-test-page-download-link>Download my entry as .csv</a>
+    </section>
   {{/if}}
-  </section>
 </div>

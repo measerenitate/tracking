@@ -18,7 +18,7 @@ export const questions = [
   {
     name: 'curiosity',
     negative: 'Apathetic',
-    positive: "Curious",
+    positive: 'Curious',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -26,7 +26,7 @@ export const questions = [
   {
     name: 'presence',
     negative: 'Absentminded',
-    positive: "Present",
+    positive: 'Present',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -34,7 +34,7 @@ export const questions = [
   {
     name: 'relaxation',
     negative: 'Tense',
-    positive: "Relaxed",
+    positive: 'Relaxed',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -42,7 +42,7 @@ export const questions = [
   {
     name: 'free-of-pain',
     negative: 'Experiencing pain',
-    positive: "Free of pain",
+    positive: 'Free of pain',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -50,7 +50,7 @@ export const questions = [
   {
     name: 'self-efficiency',
     negative: 'Helpless',
-    positive: "Self-efficient",
+    positive: 'Self-efficient',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -58,7 +58,7 @@ export const questions = [
   {
     name: 'dynamic',
     negative: 'Frozen or numb',
-    positive: "Dynamic or lively",
+    positive: 'Dynamic or lively',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -66,7 +66,7 @@ export const questions = [
   {
     name: 'energetic',
     negative: 'Sluggish',
-    positive: "Full of energy",
+    positive: 'Full of energy',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -74,7 +74,7 @@ export const questions = [
   {
     name: 'power',
     negative: 'Weak',
-    positive: "Powerful",
+    positive: 'Powerful',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -82,7 +82,7 @@ export const questions = [
   {
     name: 'alive',
     negative: 'Lifeless',
-    positive: "Alive",
+    positive: 'Alive',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,
@@ -90,7 +90,7 @@ export const questions = [
   {
     name: 'colorful',
     negative: 'The world seems grey and flat',
-    positive: "The world is colorful",
+    positive: 'The world is colorful',
     rangeMin: '-5',
     rangeMax: '5',
     value: 0,

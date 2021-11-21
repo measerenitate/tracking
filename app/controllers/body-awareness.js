@@ -2,12 +2,12 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import FileReader from 'ember-file-upload/system/file-reader';
-import questions from 'serenitate-one/data/body-awareness';
 
 export default class BodyAwarenessController extends Controller {
   fileName = 'body-awareness.csv';
 
-  questionPairs = questions;
+  @tracked
+  questionPairs = null;
 
   @tracked
   parsedData = null;
@@ -30,7 +30,7 @@ export default class BodyAwarenessController extends Controller {
   parseToCSV(rawData) {
     let data = this.existingData || '';
 
-    let headerData = this.getHeaders(data, rawData)
+    let headerData = this.getHeaders(data, rawData);
     let entryData = this.getNewEntry(headerData, rawData);
 
     return entryData;
@@ -38,14 +38,17 @@ export default class BodyAwarenessController extends Controller {
 
   getHeaders(existingData, rawData) {
     if (!existingData) {
-      let filteredData = rawData.map(category => {
+      let filteredData = rawData.map((category) => {
         let entry = {};
         entry.name = category.name;
         entry.value = category.value;
         return entry;
       });
 
-      filteredData.push({ name: 'created_at', value: new Date().toISOString() });
+      filteredData.push({
+        name: 'created_at',
+        value: new Date().toISOString(),
+      });
       let names = filteredData.mapBy('name').join(',');
       existingData += names + `\n`;
     }
@@ -53,7 +56,7 @@ export default class BodyAwarenessController extends Controller {
   }
 
   getNewEntry(existingData, rawData) {
-    let filteredData = rawData.map(category => {
+    let filteredData = rawData.map((category) => {
       let entry = {};
       entry.name = category.name;
       entry.value = category.value;
@@ -86,8 +89,10 @@ export default class BodyAwarenessController extends Controller {
   }
 
   get isShowingForm() {
-    return this.hasConfirmedUse && !this.hasUsedScaleBefore ||
-    this.hasConfirmedUse && this.existingData;
+    return (
+      (this.hasConfirmedUse && !this.hasUsedScaleBefore) ||
+      (this.hasConfirmedUse && this.existingData)
+    );
   }
 
   @action

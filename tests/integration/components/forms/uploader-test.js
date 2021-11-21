@@ -8,7 +8,7 @@ import { a11yAudit } from 'ember-a11y-testing/test-support';
 module('Integration | Component | forms/uploader', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.set('dummyAction', () => {});
   });
 
@@ -17,14 +17,18 @@ module('Integration | Component | forms/uploader', function (hooks) {
 
     assert.dom('[data-test-forms-uploader]').exists({ count: 1 });
     assert.dom('[data-test-forms-uploader-input]').exists({ count: 1 });
-    assert.dom('[data-test-forms-uploader-instructions]').includesText('Update your entries by uploading your .csv');
+    assert
+      .dom('[data-test-forms-uploader-instructions]')
+      .includesText('Update your entries by uploading your .csv');
   });
 
   test('it offers uploads of .csvs', async function (assert) {
     await render(hbs`<Forms::Uploader @onUpload={{this.dummyAction}} />`);
 
     assert.dom('[data-test-forms-uploader-input]').hasAttribute('type', 'file');
-    assert.dom('[data-test-forms-uploader-input]').hasAttribute('accept', 'text/csv');
+    assert
+      .dom('[data-test-forms-uploader-input]')
+      .hasAttribute('accept', 'text/csv');
   });
 
   test('it is accessible', async function (assert) {
@@ -40,10 +44,12 @@ module('Integration | Component | forms/uploader', function (hooks) {
     this.set('onUpload', async (value) => {
       let parsedData = await value.file.text();
       assert.equal(parsedData, 'Ember Rules!');
-    })
+    });
 
     await render(hbs`<Forms::Uploader @onUpload={{this.onUpload}} />`);
-    await triggerEvent('[data-test-forms-uploader-input]', 'change', { files: [new Blob(['Ember Rules!'])] });
+    await triggerEvent('[data-test-forms-uploader-input]', 'change', {
+      files: [new Blob(['Ember Rules!'])],
+    });
   });
 
   test('it displays the success message after a file has been uploaded', async function (assert) {
@@ -52,9 +58,13 @@ module('Integration | Component | forms/uploader', function (hooks) {
     assert.dom('[data-test-forms-uploader-instructions]').exists();
     assert.dom('[data-test-forms-uploader-success-message]').doesNotExist();
 
-    await triggerEvent('[data-test-forms-uploader-input]', 'change', { files: [new Blob(['Ember Rules!'])] });
+    await triggerEvent('[data-test-forms-uploader-input]', 'change', {
+      files: [new Blob(['Ember Rules!'])],
+    });
 
     assert.dom('[data-test-forms-uploader-instructions]').doesNotExist();
-    assert.dom('[data-test-forms-uploader-success-message]').includesText('has been uploaded');
+    assert
+      .dom('[data-test-forms-uploader-success-message]')
+      .includesText('has been uploaded');
   });
 });
