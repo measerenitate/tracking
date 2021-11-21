@@ -3,11 +3,10 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import FileReader from 'ember-file-upload/system/file-reader';
 
+import { fileToText, generateFileText } from 'serenitate-one/utils/csv';
+
 export default class BodyAwarenessController extends Controller {
   fileName = 'body-awareness.csv';
-
-  @tracked
-  parsedData = null;
 
   @tracked
   download = null;
@@ -16,7 +15,7 @@ export default class BodyAwarenessController extends Controller {
   downloadUrl = null;
 
   @tracked
-  existingData = null;
+  existingText = null;
 
   @tracked
   hasUsedScaleBefore = null;
@@ -24,71 +23,23 @@ export default class BodyAwarenessController extends Controller {
   @tracked
   hasConfirmedUse = false;
 
-  parseToCSV(rawData) {
-    let data = this.existingData || '';
+  @tracked
+  hasSubmittedForm = false;
 
-    let headerData = this.getHeaders(data, rawData);
-    let entryData = this.getNewEntry(headerData, rawData);
+  writeToFile(existingFileText, newData, fileName) {
+    let currentDate = new Date().toISOString();
+    let text = generateFileText(existingFileText, newData, currentDate);
 
-    return entryData;
-  }
-
-  getHeaders(existingData, rawData) {
-    if (!existingData) {
-      let filteredData = rawData.map((category) => {
-        let entry = {};
-        entry.name = category.name;
-        entry.value = category.value;
-        return entry;
-      });
-
-      filteredData.push({
-        name: 'created_at',
-        value: new Date().toISOString(),
-      });
-      let names = filteredData.mapBy('name').join(',');
-      existingData += names + `\n`;
-    }
-    return existingData;
-  }
-
-  getNewEntry(existingData, rawData) {
-    let filteredData = rawData.map((category) => {
-      let entry = {};
-      entry.name = category.name;
-      entry.value = category.value;
-      return entry;
-    });
-
-    filteredData.push({ name: 'created_at', value: new Date().toISOString() });
-
-    this.checkIfSourceFileCorrect(existingData, filteredData);
-
-    let values = filteredData.mapBy('value').join(',');
-
-    if (!existingData.endsWith(`\n`)) {
-      existingData += '\n';
-    }
-    existingData += values + `\n`;
-    return existingData;
-  }
-
-  checkIfSourceFileCorrect(existingData, newData) {
-    let parsedExistingData = existingData.split(',');
-    let oldHeaders = parsedExistingData;
-    let newHeaders = Object.keys(newData);
-  }
-
-  prepareDownload(csv, filename) {
-    let csvFile = new Blob([csv], { type: 'text/csv' });
-    this.download = filename;
+    let csvFile = new Blob([text], { type: 'text/csv' });
+    this.download = fileName;
     this.downloadUrl = window.URL.createObjectURL(csvFile);
+    this.hasSubmittedForm = true;
   }
 
   get isShowingForm() {
     return (
       (this.hasConfirmedUse && !this.hasUsedScaleBefore) ||
-      (this.hasConfirmedUse && this.existingData)
+      (this.hasConfirmedUse && this.existingText)
     );
   }
 
@@ -100,18 +51,13 @@ export default class BodyAwarenessController extends Controller {
 
   @action
   async setExistingData(data) {
-    let objectURL = window.URL.createObjectURL(data.file);
-    let reader = new FileReader();
-    let parsedData = await reader.readAsText(data.file);
-
-    this.existingData = parsedData;
+    this.existingText = await fileToText(data.file);
   }
 
   @action
   submitForm(data, event) {
     event?.preventDefault();
     // prepare download of data...
-    this.parsedData = this.parseToCSV(data);
-    this.prepareDownload(this.parsedData, this.fileName);
+    this.writeToFile(this.existingText, data, this.fileName);
   }
 }

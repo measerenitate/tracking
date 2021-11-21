@@ -34,13 +34,13 @@
     <Forms::Pairs
       @pairs={{@model}}
       @onSubmit={{this.submitForm}}
-      @isSubmitted={{this.parsedData}}
+      @isSubmitted={{this.hasSubmittedForm}}
       data-test-page-form="body-awareness"
     />
   {{/if}}
 
 
-  {{#if this.parsedData}}
+  {{#if this.hasSubmittedForm}}
     <section class="uk-flex uk-flex-center">
       <a href={{this.downloadUrl}} download={{this.download}} class="uk-button uk-button-primary uk-button-large" data-test-page-download-link>Download my entry as .csv</a>
     </section>
