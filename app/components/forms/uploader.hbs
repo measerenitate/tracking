@@ -1,7 +1,10 @@
-<section ...attributes>
+<section data-test-forms-uploader ...attributes>
   {{#if this.file}}
-    <span class="uk-text-bold">{{this.file.name}}</span> has been uploaded to your browser's storage.
+    <p data-test-forms-uploader-success-message><span class="uk-text-bold">{{this.file.name}}</span> has been uploaded to your browser's storage.</p>
   {{else}}
-  <p>Update your entries by uploading your .csv: <input type="file" id="input" accept="text/csv" onchange={{this.uploadFile}}></p>
+    <div class="uk-flex uk-flex-between">
+      <label data-test-forms-uploader-instructions for="forms-uploader">Update your entries by uploading your .csv: </label>
+      <input type="file" id="forms-uploader" accept="text/csv" onchange={{this.uploadFile}} data-test-forms-uploader-input>
+    </div>
   {{/if}}
 </section>
