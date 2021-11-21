@@ -20,7 +20,7 @@
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
-    "test:ember": "ember test"
+    "test:ember": "ember exam --random"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
@@ -30,7 +30,7 @@
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
     "ember-a11y-testing": "^4.3.0",
-    "ember-auto-import": "^1.11.3",
+    "ember-auto-import": "^2.2.4",
     "ember-cli": "~3.28.4",
     "ember-cli-app-version": "^5.0.0",
     "ember-cli-babel": "^7.26.6",
@@ -41,6 +41,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-data": "~3.28.0",
+    "ember-exam": "^7.0.1",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.1.1",
     "ember-file-upload": "^4.0.3",
@@ -66,7 +67,8 @@
     "prettier": "^2.3.2",
     "qunit": "^2.16.0",
     "qunit-dom": "^1.6.0",
-    "sass": "^1.43.4"
+    "sass": "^1.43.4",
+    "webpack": "^5.64.2"
   },
   "engines": {
     "node": "12.* || 14.* || >= 16"

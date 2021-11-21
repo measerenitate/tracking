@@ -7,9 +7,6 @@ export default class BodyAwarenessController extends Controller {
   fileName = 'body-awareness.csv';
 
   @tracked
-  questionPairs = null;
-
-  @tracked
   parsedData = null;
 
   @tracked

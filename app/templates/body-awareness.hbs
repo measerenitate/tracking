@@ -32,7 +32,7 @@
 
   {{#if this.isShowingForm}}
     <Forms::Pairs
-      @pairs={{this.questionPairs}}
+      @pairs={{@model}}
       @onSubmit={{this.submitForm}}
       @isSubmitted={{this.parsedData}}
       data-test-page-form="body-awareness"
