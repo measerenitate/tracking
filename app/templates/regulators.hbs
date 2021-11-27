@@ -1,0 +1,32 @@
+{{page-title "Regulators"}}
+
+<div class="uk-card uk-card-body">
+  <h2 class="uk-card-title" data-test-page-header>Regulators</h2>
+  <div data-test-page-description>
+    <p>Choose a regulator to either gauge your current level of stress / emotion or to regulate it.</p>
+    <p class="uk-text-meta">
+      Choose a negative value if you feel closer to first statement of the pair, choose a positive value if the second statement describes better how you feel.
+    </p>
+  </div>
+
+  <section>
+    <UkSwitcher @animation="uk-animation-fade" as |switcher|>
+      <switcher.nav @type="tab" as |nav|>
+        {{! nav.component is either a uk-tab or a uk-subnav component }}
+        <nav.component as |tab|>
+          <tab.item>Stress Level</tab.item>
+          <tab.item>Title 2</tab.item>
+        </nav.component>
+      </switcher.nav>
+
+      <switcher.content as |content|>
+        <content.item>
+          <StressGauge class="uk-margin-large-top" />
+        </content.item>
+        <content.item>
+          <h5>Content 2</h5>
+        </content.item>
+      </switcher.content>
+    </UkSwitcher>
+  </section>
+</div>

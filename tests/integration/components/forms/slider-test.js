@@ -20,9 +20,28 @@ module('Integration | Component | forms/slider', function (hooks) {
     });
   });
 
-  test('it renders', async function (assert) {
+  test('it renders (default = horizontal)', async function (assert) {
     await render(
       hbs`<Forms::Slider @entry={{this.pair}} @onUpdate={{this.dummyAction}} />`
+    );
+
+    assert.dom('[data-test-forms-slider]').exists({ count: 1 });
+    assert.dom('[data-test-forms-slider-input]').hasValue('1');
+    assert
+      .dom('[data-test-forms-slider-label]')
+      .includesText('Chocolate Cake or Strawberry Cake');
+    assert
+      .dom('[data-test-forms-slider-left-label]')
+      .includesText('Chocolate Cake');
+    assert
+      .dom('[data-test-forms-slider-right-label]')
+      .includesText('Strawberry Cake');
+    assert.dom('[data-test-forms-slider-current-value]').includesText(1);
+  });
+
+  test('it renders (vertical)', async function (assert) {
+    await render(
+      hbs`<Forms::Slider @entry={{this.pair}} @onUpdate={{this.dummyAction}} @isVertical={{true}} />`
     );
 
     assert.dom('[data-test-forms-slider]').exists({ count: 1 });
@@ -42,6 +61,15 @@ module('Integration | Component | forms/slider', function (hooks) {
   test('it is accessible', async function (assert) {
     await render(
       hbs`<Forms::Slider @entry={{this.pair}} @onUpdate={{this.dummyAction}} />`
+    );
+
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors detected!');
+  });
+
+  test('it is accessible (vertical)', async function (assert) {
+    await render(
+      hbs`<Forms::Slider @entry={{this.pair}} @onUpdate={{this.dummyAction}} @isVertical={{true}} />`
     );
 
     await a11yAudit();
