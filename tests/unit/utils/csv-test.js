@@ -1,4 +1,11 @@
-import { fileHasExistingData, fileToText, generateFileText, listToText, mapByKey, writeLineToFile } from 'serenitate-one/utils/csv';
+import {
+  fileHasExistingData,
+  fileToText,
+  generateFileText,
+  listToText,
+  mapByKey,
+  writeLineToFile,
+} from 'serenitate-one/utils/csv';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | csv', function () {
@@ -29,55 +36,75 @@ module('Unit | Utility | csv', function () {
   });
 
   module('generateFileText', function (hooks) {
-    hooks.beforeEach(function() {
-      this.newEntry = [{
-        name: 'least',
-        value: 'Tree Cake'
-      }, {
-        name: 'ok',
-        value: 'Marmelade'
-      }, {
-        name: 'favorite',
-        value: 'Chocolate Truffles'
-      }];
+    hooks.beforeEach(function () {
+      this.newEntry = [
+        {
+          name: 'least',
+          value: 'Tree Cake',
+        },
+        {
+          name: 'ok',
+          value: 'Marmelade',
+        },
+        {
+          name: 'favorite',
+          value: 'Chocolate Truffles',
+        },
+      ];
       this.newDate = new Date('2020-01-01').toISOString();
     });
 
     test('it appends text to already existing data', async function (assert) {
-      let text = generateFileText('Coconut Ice Cream,Bounty,Snickers,1990-01-01T00:00:00.000Z', this.newEntry, this.newDate);
-      assert.equal(text, `Coconut Ice Cream,Bounty,Snickers,1990-01-01T00:00:00.000Z\nTree Cake,Marmelade,Chocolate Truffles,2020-01-01T00:00:00.000Z\n`);
+      let text = generateFileText(
+        'Coconut Ice Cream,Bounty,Snickers,1990-01-01T00:00:00.000Z',
+        this.newEntry,
+        this.newDate
+      );
+      assert.equal(
+        text,
+        `Coconut Ice Cream,Bounty,Snickers,1990-01-01T00:00:00.000Z\nTree Cake,Marmelade,Chocolate Truffles,2020-01-01T00:00:00.000Z\n`
+      );
     });
 
     test('it appends headers and text if no data exists yet', async function (assert) {
       let text = generateFileText('', this.newEntry, this.newDate);
-      assert.equal(text, `least,ok,favorite,created_at\nTree Cake,Marmelade,Chocolate Truffles,2020-01-01T00:00:00.000Z\n`);
+      assert.equal(
+        text,
+        `least,ok,favorite,created_at\nTree Cake,Marmelade,Chocolate Truffles,2020-01-01T00:00:00.000Z\n`
+      );
     });
 
     test('it appends headers and text if data is null', async function (assert) {
       let text = generateFileText(null, this.newEntry, this.newDate);
-      assert.equal(text, `least,ok,favorite,created_at\nTree Cake,Marmelade,Chocolate Truffles,2020-01-01T00:00:00.000Z\n`);
+      assert.equal(
+        text,
+        `least,ok,favorite,created_at\nTree Cake,Marmelade,Chocolate Truffles,2020-01-01T00:00:00.000Z\n`
+      );
     });
   });
 
   module('listToText', function () {
     test('it returns a comma separated string generated from a list', async function (assert) {
-      let list = ['shiba','dachs','golden'];
+      let list = ['shiba', 'dachs', 'golden'];
       let result = listToText(list);
       assert.equal(result, 'shiba,dachs,golden');
     });
   });
 
   module('mapByKey', function (hooks) {
-    hooks.beforeEach(function() {
-      this.drinks = [{
-        name: 'Pepsi',
-        flavour: 'great',
-        value: 0.2,
-      }, {
-        name: 'Dr. Pepper',
-        flavour: 'excellent',
-        value: 10
-      }];
+    hooks.beforeEach(function () {
+      this.drinks = [
+        {
+          name: 'Pepsi',
+          flavour: 'great',
+          value: 0.2,
+        },
+        {
+          name: 'Dr. Pepper',
+          flavour: 'excellent',
+          value: 10,
+        },
+      ];
     });
 
     test('it maps an array by a key', function (assert) {

@@ -41,8 +41,8 @@ export function generateFileText(existingFileText, entryAsJSON, currentDate) {
       return;
     }
   } else {
-     let headerText = getHeaders(entryAsJSON);
-     updatedText = writeLineToFile(updatedText, headerText);
+    let headerText = getHeaders(entryAsJSON);
+    updatedText = writeLineToFile(updatedText, headerText);
   }
 
   let bodyText = getNewEntry(entryAsJSON, currentDate);

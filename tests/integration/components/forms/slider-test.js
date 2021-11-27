@@ -12,8 +12,8 @@ module('Integration | Component | forms/slider', function (hooks) {
     this.set('dummyAction', () => {});
     this.set('pair', {
       name: 'dessert',
-      negative: 'Chocolate Cake',
-      positive: 'Strawberry Cake',
+      minLabel: 'Chocolate Cake',
+      maxLabel: 'Strawberry Cake',
       rangeMin: 0,
       rangeMax: 10,
       value: 1,

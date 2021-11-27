@@ -12,7 +12,7 @@ export default class FormsSliderComponent extends Component {
   }
 
   get label() {
-    return `${this.args.entry.negative} or ${this.args.entry.positive}`;
+    return `${this.args.entry.minLabel} or ${this.args.entry.maxLabel}`;
   }
 
   @action
