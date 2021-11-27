@@ -1,20 +1,17 @@
-<fieldset class="uk-position-relative uk-padding-small border-corners uk-margin-large-bottom" data-test-forms-slider={{@entry.name}}>
-  <label class="sr-only" for="forms-pairs-range-{{@entry.name}}" data-test-forms-slider-label>{{this.label}}</label>
-  <div class="uk-flex-between responsive-flex-row">
-    <p class="uk-margin-remove uk-width-1-4 responsive-flex-row-item" data-test-forms-slider-left-label>{{@entry.minLabel}}</p>
-    <input
-      id="forms-pairs-range-{{@entry.name}}"
-      class="uk-range uk-width-1-2 responsive-flex-row-item--large"
-      type="range"
-      min={{@entry.rangeMin}}
-      max={{@entry.rangeMax}}
-      oninput={{fn this.updateRange @entry.name}}
-      value={{@entry.value}}
-      data-test-forms-slider-input
-      ...attributes />
-    <p class="uk-margin-remove uk-width-1-4 uk-text-right responsive-flex-row-item" data-test-forms-slider-right-label>{{@entry.maxLabel}}</p>
-  </div>
-  <div class="uk-flex uk-flex-center uk-text-center uk-position-bottom-center uk-position-absolute uk-background-primary round edge-bottom">
-    <div class="uk-width-auto uk-text-white uk-text-small uk-margin-small-top uk-margin-remove"  data-test-forms-slider-current-value>{{this.currentValue}}</div>
-  </div>
-</fieldset>
+{{#if @isVertical}}
+  <Forms::Slider::Vertical
+    @entry={{@entry}}
+    @onUpdate={{fn this.updateRange @entry.name}}
+    @label={{this.label}}
+    @currentValue={{this.currentValue}}
+    data-test-forms-pairs-entry={{@entry.name}}
+    ...attributes />
+{{else}}
+  <Forms::Slider::Horizontal
+    @entry={{@entry}}
+    @onUpdate={{fn this.updateRange @entry.name}}
+    @label={{this.label}}
+    @currentValue={{this.currentValue}}
+    data-test-forms-pairs-entry={{@entry.name}}
+    ...attributes />
+{{/if}}

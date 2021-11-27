@@ -1,6 +1,6 @@
 <form data-test-forms-pairs ...attributes>
   {{#each @pairs as |pair|}}
-    <Forms::Slider @entry={{pair}} @onUpdate={{this.updateForm}} data-test-forms-pairs-entry={{pair.name}} />
+    <Forms::Slider @entry={{pair}} @onUpdate={{this.updateForm}} />
   {{/each}}
   <div class="uk-flex uk-flex-right">
     <UkButton @color="primary" @fill={{true}} @on-click={{fn @onSubmit this.pairs}} disabled={{@isSubmitted}} data-test-forms-pairs-submit>
